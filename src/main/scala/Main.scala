@@ -18,14 +18,33 @@ object Main extends App {
   val r8 = Car("Audi", "Germany", 250, 100)
   val devileAdvocate = Film(Seq("Al Pacino", "Keanu Reeves"), date)
   val al = Actor("Pacino", Seq("Scarface", "Godfather", "Devil advocate"))
-  println(al)
 
-
+var cpt : Int = 1
 val bufferedSource = Source.fromFile(dataset)
 for (line <- Source.fromFile(dataset).getLines) {
-    println(line)
     val column = line.split(",").map(_.trim)
-        println(column(0))
+    if( column.length == 2){
+      val firstSeq = column(0).split(";").map(_.trim)
+      val secondSeq = column(1).split(";").map(_.trim)
+      if (firstSeq.length == 2){
+        //val film = Film(Seq(firstSeq(0), firstSeq(1)), date)
+      } else if (secondSeq.length == 3){
+        val actor = Actor(column(0), Seq(secondSeq(0),secondSeq(1),secondSeq(2)))
+        println("line : " + cpt + " " + actor)
+      }
+    } else if(column.length == 3){
+      val cat = Cat(column(0), column(1), column(2).toInt)
+      println("line : " + cpt + " " + cat)
+    } else if(column.length == 4){
+      val car = Car(column(0), column(1), column(2).toInt, column(3).toInt)
+      println("line : " + cpt + " " + car)
+    } else if(column.length == 5){
+      val person = Person(column(0), column(1), column(2).toInt, column(3).toInt, column(4).toInt)
+      println("line : " + cpt + " " + person)
+    }
+    cpt = cpt + 1
 }
 bufferedSource.close
+
+
 }
