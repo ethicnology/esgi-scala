@@ -22,7 +22,6 @@ object Main extends App {
 
   def tryToInt( s: String ) = Try(s.toInt).toOption
 
-
   var cpt : Int = 1
   val bufferedSource = Source.fromFile(dataset)
   for (line <- Source.fromFile(dataset).getLines) {
@@ -31,7 +30,8 @@ object Main extends App {
         val firstSeq = column(0).split(";").map(_.trim)
         val secondSeq = column(1).split(";").map(_.trim)
         if (firstSeq.length == 2){
-          //val film = Film(Seq(firstSeq(0), firstSeq(1)), date)
+          val film = Film(Seq(firstSeq(0), firstSeq(1)), format.parse(column(1)))
+          println("line : " + cpt + " " + film)
         } else if (secondSeq.length == 3){
           val actor = Actor(column(0), Seq(secondSeq(0),secondSeq(1),secondSeq(2)))
           println("line : " + cpt + " " + actor)
